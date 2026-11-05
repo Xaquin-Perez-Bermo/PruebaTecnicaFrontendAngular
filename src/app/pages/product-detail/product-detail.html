@@ -1,0 +1,73 @@
+<main class="detail-page">
+  <a class="back-link" routerLink="/">← Volver a productos</a>
+
+  @if (loading()) {
+    <p class="message" role="status">Cargando producto...</p>
+  } @else if (error()) {
+    <p class="message" role="alert">No se ha podido cargar el producto. Inténtalo de nuevo más tarde.</p>
+  } @else if (product(); as item) {
+    <section class="product-detail" [attr.aria-label]="item.brand + ' ' + item.model">
+      <div class="image-panel">
+        <img [src]="item.imgUrl" [alt]="item.brand + ' ' + item.model" />
+      </div>
+
+      <div class="information">
+        <p class="brand">{{ item.brand }}</p>
+        <h1>{{ item.model }}</h1>
+        <p class="price">{{ item.price ? item.price + ' €' : 'Precio no disponible' }}</p>
+
+        <dl class="specifications">
+          <div><dt>CPU</dt><dd>{{ item.cpu }}</dd></div>
+          <div><dt>RAM</dt><dd>{{ item.ram }}</dd></div>
+          <div><dt>Sistema operativo</dt><dd>{{ item.os }}</dd></div>
+          <div><dt>Resolución de pantalla</dt><dd>{{ item.displaySize }}</dd></div>
+          <div><dt>Tamaño de pantalla</dt><dd>{{ item.displayResolution }}</dd></div>
+          <div><dt>Batería</dt><dd>{{ item.battery }}</dd></div>
+          <div><dt>Cámara principal</dt><dd>{{ formatValues(item.primaryCamera) }}</dd></div>
+          <div><dt>Cámara secundaria</dt><dd>{{ formatValues(item.secondaryCmera) }}</dd></div>
+          <div><dt>Dimensiones</dt><dd>{{ item.dimentions }}</dd></div>
+          <div><dt>Peso</dt><dd>{{ item.weight }}</dd></div>
+        </dl>
+
+        <div class="actions">
+          <label>
+            Color
+            <select
+              aria-label="Color"
+              [value]="selectedColor() ?? ''"
+              (change)="onColorChange($event)"
+            >
+              @for (color of item.options.colors; track color.code) {
+                <option [value]="color.code">{{ color.name }}</option>
+              }
+            </select>
+          </label>
+
+          <label>
+            Almacenamiento
+            <select
+              aria-label="Almacenamiento"
+              [value]="selectedStorage() ?? ''"
+              (change)="onStorageChange($event)"
+            >
+              @for (storage of item.options.storages; track storage.code) {
+                <option [value]="storage.code">{{ storage.name }}</option>
+              }
+            </select>
+          </label>
+
+          <button
+            type="button"
+            [disabled]="selectedColor() === null || selectedStorage() === null || addingToCart()"
+            (click)="addToCart()"
+          >
+            {{ addingToCart() ? 'Añadiendo...' : 'Añadir a la cesta' }}
+          </button>
+          @if (cartError()) {
+            <p class="cart-error" role="alert">No se ha podido añadir el producto. Inténtalo de nuevo.</p>
+          }
+        </div>
+      </div>
+    </section>
+  }
+</main>

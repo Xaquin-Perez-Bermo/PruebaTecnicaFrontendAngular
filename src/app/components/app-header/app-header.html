@@ -1,0 +1,21 @@
+<header class="header">
+  <div class="header-content">
+    <a class="brand" routerLink="/" aria-label="Tienda móvil, ir al inicio">
+      <span class="brand-icon" aria-hidden="true">▯</span>
+      <span>Tienda móvil</span>
+    </a>
+
+    <nav class="breadcrumbs" aria-label="Ruta de navegación">
+      @if (isProductDetail()) {
+        <a routerLink="/">Productos</a>
+        <span aria-hidden="true">/</span>
+      }
+      <span aria-current="page">{{ pageTitle() }}</span>
+    </nav>
+
+    <div class="cart" aria-label="Artículos en la cesta">
+      <span aria-hidden="true">Cesta</span>
+      <span class="cart-count" aria-live="polite">{{ cartCount() }}</span>
+    </div>
+  </div>
+</header>

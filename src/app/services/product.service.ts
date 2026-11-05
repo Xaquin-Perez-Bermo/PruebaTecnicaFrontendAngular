@@ -4,6 +4,7 @@ import { Observable, of, tap } from 'rxjs';
 
 import { CartItem, CartResponse, Product, ProductDetail } from '../models/product.model';
 import { CacheService } from './cache.service';
+import { CartService } from './cart.service';
 
 export const API_URL = 'https://itx-frontend-test.onrender.com/api';
 
@@ -11,6 +12,7 @@ export const API_URL = 'https://itx-frontend-test.onrender.com/api';
 export class ProductService {
   private readonly http = inject(HttpClient);
   private readonly cache = inject(CacheService);
+  private readonly cart = inject(CartService);
 
   getProducts(): Observable<Product[]> {
     return this.cached('products', () => this.http.get<Product[]>(`${API_URL}/product`));
@@ -23,7 +25,9 @@ export class ProductService {
   }
 
   addToCart(item: CartItem): Observable<CartResponse> {
-    return this.http.post<CartResponse>(`${API_URL}/cart`, item);
+    return this.http
+      .post<CartResponse>(`${API_URL}/cart`, item)
+      .pipe(tap((response) => this.cart.setCount(response.count)));
   }
 
   private cached<T>(key: string, request: () => Observable<T>): Observable<T> {

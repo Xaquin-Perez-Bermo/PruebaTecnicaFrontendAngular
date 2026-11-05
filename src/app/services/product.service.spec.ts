@@ -4,6 +4,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { Product } from '../models/product.model';
 import { CACHE_TTL_MS } from './cache.service';
+import { CartService } from './cart.service';
 import { API_URL, ProductService } from './product.service';
 
 describe('ProductService', () => {
@@ -70,5 +71,7 @@ describe('ProductService', () => {
     req.flush({ count: 3 });
 
     expect(count).toBe(3);
+    expect(TestBed.inject(CartService).count()).toBe(3);
+    expect(localStorage.getItem('itx-cart-count')).toBe('3');
   });
 });

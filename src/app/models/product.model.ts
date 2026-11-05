@@ -19,8 +19,8 @@ export interface ProductDetail extends Product {
   displayResolution: string;
   displaySize: string;
   battery: string;
-  primaryCamera: string[];
-  secondaryCmera: string[];
+  primaryCamera: string[] | string;
+  secondaryCmera: string[] | string;
   dimentions: string;
   weight: string;
   options: {
