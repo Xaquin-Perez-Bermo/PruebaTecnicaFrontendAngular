@@ -1,0 +1,25 @@
+<section class="list-view">
+  <div class="search">
+    <input
+      type="search"
+      placeholder="Buscar por marca o modelo"
+      aria-label="Buscar por marca o modelo"
+      [value]="search()"
+      (input)="onSearch($event)"
+    />
+  </div>
+
+  @if (loading()) {
+    <p class="message">Cargando productos...</p>
+  } @else if (error()) {
+    <p class="message">No se han podido cargar los productos. Inténtalo de nuevo más tarde.</p>
+  } @else if (filteredProducts().length === 0) {
+    <p class="message">No hay productos que coincidan con la búsqueda.</p>
+  } @else {
+    <div class="grid">
+      @for (product of filteredProducts(); track product.id) {
+        <app-product-item [product]="product" />
+      }
+    </div>
+  }
+</section>

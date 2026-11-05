@@ -1,0 +1,44 @@
+.list-view {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.search {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+
+  input {
+    width: 100%;
+    max-width: 300px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+}
+
+.message {
+  text-align: center;
+  color: #666;
+}
+
+// Máximo 4 por fila, menos en pantallas pequeñas
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @media (min-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

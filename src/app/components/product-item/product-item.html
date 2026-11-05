@@ -1,0 +1,6 @@
+<a class="item" [routerLink]="['/product', product().id]">
+  <img [src]="product().imgUrl" [alt]="product().brand + ' ' + product().model" loading="lazy" />
+  <p class="brand">{{ product().brand }}</p>
+  <p class="model">{{ product().model }}</p>
+  <p class="price">{{ product().price ? product().price + ' €' : 'Precio no disponible' }}</p>
+</a>
